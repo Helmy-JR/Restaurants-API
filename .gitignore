@@ -52,3 +52,10 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+# Ignore development-specific appsettings
+appsettings.Development.json
+
+# Optional: ignore any other local or secret configs
+appsettings.Local.json
+appsettings.*.local.json

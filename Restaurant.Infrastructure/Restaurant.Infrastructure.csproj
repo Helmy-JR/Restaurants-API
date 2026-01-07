@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <NoWarn>
+      CS0161;CS0168;CS0219;CS0649;CS1002;CS7036;
+      CS8600;CS8601;CS8602;CS8603;CS8604;
+      CS8618;CS8622;CS8625;CS8634
+    </NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Restaurant.Application\Restaurant.Application.csproj" />
+  </ItemGroup>
+
+</Project>
