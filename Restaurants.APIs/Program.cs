@@ -1,8 +1,13 @@
-namespace Restaurant.APIs;
+namespace Restaurants.APIs;
+
+using System.Threading.Tasks;
+using Microsoft.OpenApi.Writers;
+using Restaurants.Infrastructure.Extensions;
+using Restaurants.Infrastructure.Seeders;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
@@ -13,11 +18,17 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
+        builder.Services.AddInfrastructureServices(builder.Configuration);
+
         #endregion
 
         ;
         var app = builder.Build();
 
+        // Data Seeding
+        var scope = app.Services.CreateScope();
+        var seeder = scope.ServiceProvider.GetRequiredService<IRestaurantSeeder>();
+        await seeder.SeedAsync();
 
         #region Configure Kestrel middlewares
         // Configure the HTTP request pipeline.
