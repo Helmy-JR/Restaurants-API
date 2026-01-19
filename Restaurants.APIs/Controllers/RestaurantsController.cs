@@ -17,5 +17,16 @@ namespace Restaurants.APIs.Controllers
             return Ok(restaurants);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult> GetById(int id)
+        {
+            var restaurant = await _restaurantsService.GetRestaurantByIdAsync(id);
+            if (restaurant == null)
+            {
+                return NotFound();
+            }
+            return Ok(restaurant);
+        }
+
     }
 }
