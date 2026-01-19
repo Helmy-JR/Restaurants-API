@@ -1,9 +1,6 @@
-namespace Restaurants.APIs;
-
-using System.Threading.Tasks;
-using Microsoft.OpenApi.Writers;
 using Restaurants.Infrastructure.Extensions;
 using Restaurants.Infrastructure.Seeders;
+using Restaurants.Application.Extensions;
 
 public class Program
 {
@@ -17,7 +14,8 @@ public class Program
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-
+        ;
+        builder.Services.AddApplication();
         builder.Services.AddInfrastructureServices(builder.Configuration);
 
         #endregion
