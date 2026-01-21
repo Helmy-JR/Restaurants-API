@@ -29,10 +29,3 @@ namespace Restaurants.Infrastructure.Persistence
         
     }
 }
-
-/* 
-dotnet ef migrations add InitialCreate \
-    --project Restaurants.Infrastructure \
-    --startup-project Restaurants.APIs
-
-*/
