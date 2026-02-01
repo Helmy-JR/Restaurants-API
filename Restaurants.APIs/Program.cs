@@ -1,6 +1,8 @@
 using Restaurants.Infrastructure.Extensions;
 using Restaurants.Infrastructure.Seeders;
 using Restaurants.Application.Extensions;
+using Serilog;
+using Restaurants.APIs.Middlewares;
 
 public class Program
 {
@@ -14,9 +16,15 @@ public class Program
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-        ;
+
+        builder.Services.AddScoped<ErrorHandlingMiddleware>();
+        builder.Services.AddScoped<RequestTimeLoggingMiddleware>();
+        
         builder.Services.AddApplication();
         builder.Services.AddInfrastructureServices(builder.Configuration);
+        builder.Host.UseSerilog((context, configuration)=>
+            configuration.ReadFrom.Configuration(context.Configuration)
+        );
 
         #endregion
 
@@ -30,6 +38,11 @@ public class Program
 
         #region Configure Kestrel middlewares
         // Configure the HTTP request pipeline.
+        app.UseMiddleware<ErrorHandlingMiddleware>();
+        app.UseMiddleware<RequestTimeLoggingMiddleware>();
+        
+        app.UseSerilogRequestLogging();
+
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
