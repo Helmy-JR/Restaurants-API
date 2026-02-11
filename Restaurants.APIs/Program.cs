@@ -3,6 +3,8 @@ using Restaurants.Infrastructure.Seeders;
 using Restaurants.Application.Extensions;
 using Serilog;
 using Restaurants.APIs.Middlewares;
+using Restaurants.Domain.Entities;
+using Restaurants.APIs.Extensions;
 
 public class Program
 {
@@ -12,23 +14,13 @@ public class Program
 
         #region Configure Sevices
         // Add services to the container.
-
-        builder.Services.AddControllers();
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
-
-        builder.Services.AddScoped<ErrorHandlingMiddleware>();
-        builder.Services.AddScoped<RequestTimeLoggingMiddleware>();
         
+        builder.AddPresentation();
         builder.Services.AddApplication();
         builder.Services.AddInfrastructureServices(builder.Configuration);
-        builder.Host.UseSerilog((context, configuration)=>
-            configuration.ReadFrom.Configuration(context.Configuration)
-        );
 
         #endregion
 
-        ;
         var app = builder.Build();
 
         // Data Seeding
@@ -48,7 +40,13 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+        
         app.UseHttpsRedirection();
+
+        app.MapGroup("api/auth")
+           .WithTags("auth")
+           .MapIdentityApi<User>();
+        
         app.UseAuthorization();
         app.MapControllers();
 

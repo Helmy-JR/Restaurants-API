@@ -6,20 +6,26 @@ using Restaurants.Application.Restaurants.Commands.DeleteRestaurant;
 using Restaurants.Application.Restaurants.Commands.UpdateRestaurant;
 using Restaurants.Application.Restaurants.Queries.GetAllRestaurants;
 using Restaurants.Application.Restaurants.Queries.GetRestaurantByID;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace Restaurants.APIs.Controllers
 {
     [ApiController]
     [Route("api/restaurants")]
-    public class RestaurantsController(IMediator mediator)
-        : ControllerBase
+    [Authorize]
+    public class RestaurantsController : ControllerBase
     {
-        private readonly IMediator _mediator = mediator;
+        private readonly IMediator _mediator;
+        public RestaurantsController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
 
         [HttpGet]
         // [ProducesResponseType(StatusCodes.Status200OK,Type = typeof(IEnumerable<RestaurantDto>))]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        // [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetAll()
         {
             var restaurants = await _mediator.Send(new GetAllRestaurantsQuery());
