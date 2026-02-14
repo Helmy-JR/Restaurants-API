@@ -1,8 +1,9 @@
 using MediatR;
+using Restaurants.Application.Restaurants.Dtos;
 
 namespace Restaurants.Application.Restaurants.Commands.CreateRestaurant
 {
-    public class CreateRestaurantCommand : IRequest<int>
+    public class CreateRestaurantCommand : IRequest<RestaurantDto>
     {
         //[StringLength(100,MinimumLength =3)]
         public string Name { get; set; }

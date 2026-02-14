@@ -44,7 +44,7 @@ public class Program
         app.UseHttpsRedirection();
 
         app.MapGroup("api/auth")
-           .WithTags("auth")
+           .WithTags("Identity")
            .MapIdentityApi<User>();
         
         app.UseAuthorization();

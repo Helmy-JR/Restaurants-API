@@ -8,7 +8,9 @@ namespace Restaurants.Domain.Repositories
 
         Task<Restaurant?> GetByIdAsync(int id);
 
-        Task<int> Create(Restaurant entity);
+        Task Create(Restaurant entity);
+
+        Task<int> CreateWithID(Restaurant entity);
 
         Task DeleteAsync(Restaurant entity);
 
