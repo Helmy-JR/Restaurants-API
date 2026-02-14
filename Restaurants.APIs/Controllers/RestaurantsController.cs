@@ -7,6 +7,7 @@ using Restaurants.Application.Restaurants.Commands.UpdateRestaurant;
 using Restaurants.Application.Restaurants.Queries.GetAllRestaurants;
 using Restaurants.Application.Restaurants.Queries.GetRestaurantByID;
 using Microsoft.AspNetCore.Authorization;
+using Restaurants.Infrastructure.Authorization;
 
 
 namespace Restaurants.APIs.Controllers
@@ -33,6 +34,7 @@ namespace Restaurants.APIs.Controllers
         }
 
         [HttpGet("{id}")]
+        // [Authorize(Policy = PolicyNames.HasNationality)]
         [ProducesResponseType(StatusCodes.Status200OK,Type = typeof(RestaurantDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<RestaurantDto?>> GetById(int id)
@@ -51,10 +53,17 @@ namespace Restaurants.APIs.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created,Type = typeof(CreateRestaurantCommand))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Roles = "Owner")]
         public async Task<ActionResult> CreateRestaurant([FromBody] CreateRestaurantCommand command)
         {
-            int id = await _mediator.Send(command);
-            return CreatedAtAction(nameof(GetById), new { id }, null);
+            var restaurant = await _mediator.Send(command);
+
+            return CreatedAtAction(
+                nameof(GetById),
+                new { id = restaurant.Id },
+                restaurant);
         }
 
         [HttpPatch("{id}")]
