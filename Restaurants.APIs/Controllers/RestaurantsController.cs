@@ -27,9 +27,9 @@ namespace Restaurants.APIs.Controllers
         // [ProducesResponseType(StatusCodes.Status200OK,Type = typeof(IEnumerable<RestaurantDto>))]
         // [ProducesResponseType(StatusCodes.Status404NotFound)]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetAll()
+        public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetAll([FromQuery] GetAllRestaurantsQuery query)
         {
-            var restaurants = await _mediator.Send(new GetAllRestaurantsQuery());
+            var restaurants = await _mediator.Send(query);
             return Ok(restaurants);
         }
 
