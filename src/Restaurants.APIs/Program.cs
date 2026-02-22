@@ -1,12 +1,12 @@
-using Restaurants.Infrastructure.Extensions;
-using Restaurants.Infrastructure.Seeders;
-using Restaurants.Application.Extensions;
 using Serilog;
-using Restaurants.APIs.Middlewares;
-using Restaurants.Domain.Entities;
 using Restaurants.APIs.Extensions;
+using Restaurants.Domain.Entities;
+using Restaurants.APIs.Middlewares;
+using Restaurants.Application.Extensions;
+using Restaurants.Infrastructure.Seeders;
+using Restaurants.Infrastructure.Extensions;
 
-public class Program
+public partial class Program
 {
     public static async Task Main(string[] args)
     {
@@ -54,4 +54,6 @@ public class Program
 
         app.Run();
     }
+
 }
+// public partial class Program { }
