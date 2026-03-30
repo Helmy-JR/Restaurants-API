@@ -1,0 +1,29 @@
+name: restaurants-api
+
+on: 
+  push: 
+    branches: [ master ]
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v5.2.0
+        with:
+          # Optional SDK version(s) to use. If not provided, will install global.json version when available. Examples: 2.2.104, 3.1, 3.1.x, 3.x, 6.0.2xx
+          dotnet-version: 8.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore
+      - name: Test
+        run: dotnet test
