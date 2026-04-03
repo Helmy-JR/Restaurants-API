@@ -203,4 +203,8 @@ Test project location:
 4. Verify logs under `src/Restaurants.APIs/Logs/` when debugging.
 
 ## License
-This project is licensed under the MIT License. See `LICENSE` for details.
+This project is licensed under the MIT License.
+
+
+## Support
+For support, please create an issue in the repository.
